@@ -7,14 +7,9 @@ dotenv.config();
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: [
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://localhost:3002',
-      'https://beraflow.com',
-    ],
+    origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true,
+    credentials: false,
   });
   await app.listen(process.env.PORT ?? 5000);
 }

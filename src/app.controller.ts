@@ -30,29 +30,28 @@ export class AppController {
 
   @Get('apr')
   async getApr(): Promise<any> {
-    const aprs = await fetch('https://hub.berachain.com/api/validators/apr/', {
-      headers: {
-        accept: '*/*',
-        'accept-language': 'en-US,en;q=0.9,ru;q=0.8',
-        baggage:
-          'sentry-environment=vercel-production,sentry-release=f3ceafe602b8307610c87549df21b6849980b27e,sentry-public_key=22333188526836c1863286ab0d15bca6,sentry-trace_id=e45516e820ac42149242c0e0e76959ae,sentry-sample_rate=0.1,sentry-sampled=false',
-        priority: 'u=1, i',
-        'sec-ch-ua':
-          '"Chromium";v="134", "Not:A-Brand";v="24", "Google Chrome";v="134"',
-        'sec-ch-ua-mobile': '?0',
-        'sec-ch-ua-platform': '"Windows"',
-        'sec-fetch-dest': 'empty',
-        'sec-fetch-mode': 'cors',
-        'sec-fetch-site': 'same-origin',
-        origin: 'https://hub.berachain.com',
-        'sentry-trace': 'e45516e820ac42149242c0e0e76959ae-a812854bd32275a4-0',
-      },
-      referrer:
-        'https://hub.berachain.com/validators/0x89cbd542c737cca4bc33f1ea5084a857a7620042fe37fd326ecf5aeb61f2ce096043cd0ed57ba44693cf606978b566ba/',
-      body: null,
-      method: 'GET',
-    }).then((res) => res.json());
+    console.log('Fetching APR data...');
+    try {
+      const response = await fetch(
+        'https://hub.berachain.com/api/validators/apr/',
+        {
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        },
+      );
 
-    return aprs;
+      if (!response.ok) {
+        throw new Error(`API responded with status: ${response.status}`);
+      }
+
+      const aprs = await response.json();
+      return aprs;
+    } catch (error) {
+      console.error('Error fetching APR data:', error);
+      // Возвращаем пустой объект или массив вместо ошибки
+      return [];
+    }
   }
 }

@@ -28,7 +28,7 @@ export class AppController {
     return (await this.supabase.from('tokens').select('*')).data;
   }
 
-  @Get('/apr')
+  @Get('apr')
   async getApr(): Promise<any> {
     const aprs = await fetch('https://hub.berachain.com/api/validators/apr/', {
       headers: {

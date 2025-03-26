@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { createClient } from '@supabase/supabase-js';
 import { SupabaseClient } from '@supabase/supabase-js';
@@ -30,7 +30,6 @@ export class AppController {
 
   @Get('apr')
   async getApr(): Promise<any> {
-    console.log('Fetching APR data...');
     try {
       const response = await fetch(
         'https://hub.berachain.com/api/validators/apr/',
@@ -53,5 +52,16 @@ export class AppController {
       // Возвращаем пустой объект или массив вместо ошибки
       return [];
     }
+  }
+
+  @Get('rewards/:validator/:address')
+  async getRewards(
+    @Param('validator') validator: string,
+    @Param('address') address: string,
+  ): Promise<any> {
+    return fetch(
+      `https://hub.berachain.com/api/portfolio/proofs/?account=${address}&validator=${validator}&page=1&perPage=10000`,
+      {},
+    ).then((res) => res.json());
   }
 }

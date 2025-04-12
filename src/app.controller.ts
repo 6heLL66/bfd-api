@@ -60,7 +60,7 @@ export class AppController {
     @Param('address') address: string,
   ): Promise<any> {
     return fetch(
-      `https://hub.berachain.com/api/portfolio/proofs/?account=${address}&validator=${validator}&page=1&perPage=10000`,
+      `https://hub.berachain.com/api/portfolio/incentives/?account=${address}&validator=${validator}&page=1&perPage=10000`,
       {},
     ).then((res) => res.json());
   }

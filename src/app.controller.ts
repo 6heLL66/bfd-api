@@ -2,6 +2,7 @@ import { Controller, Get, Param } from '@nestjs/common';
 import { AppService } from './app.service';
 import { createClient } from '@supabase/supabase-js';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { ApiVaultsResponse } from './types';
 
 @Controller()
 export class AppController {
@@ -52,6 +53,11 @@ export class AppController {
       // Возвращаем пустой объект или массив вместо ошибки
       return [];
     }
+  }
+
+  @Get('vaults')
+  async getVaults(): Promise<ApiVaultsResponse> {
+    return this.appService.getVaults();
   }
 
   @Get('rewards/:validator/:address')
